@@ -52,9 +52,7 @@ shooting.columns = shooting.columns.droplevel()  # Drop 1 level of the columns
 
 
 # Merge both dataframes
-merged_data = matches[0].merge(shooting[["Date", "Sh", "SoT", "Dist", "FK", "PK", "PKatt"]], on="Date")
+merged_data = matches[0].merge(
+    shooting[["Date", "Sh", "SoT", "Dist", "FK", "PK", "PKatt"]], on="Date")
 
-print(merged_data.head())
-
-
-
+print(merged_data)
