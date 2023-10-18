@@ -1,6 +1,6 @@
 # Premier League Scraper
 
-Premier League Scraper provides a simple and open-source solution for accessing up-to-date soccer news directly from your terminal.
+Premier League Scraper provides an open-source solution for accessing up-to-date soccer news directly from the Command Line Interface.
 
 ![Premier League Scraper Screenshot](./screenshot.png)
 
