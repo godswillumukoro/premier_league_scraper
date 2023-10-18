@@ -12,7 +12,6 @@ Install all the modules and run `python3 script.py` or `python script.py`
 ## Tech Stack & Modules
 
 - Python3
-- requests
 - bs4
 - pandas
 - io
