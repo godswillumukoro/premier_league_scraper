@@ -26,27 +26,21 @@ title = r"""
 
 """
 
-# Introduction Prompt Message
-try:
-    print(Fore.GREEN + title)
-except:
-    print(pyfiglet.figlet_format("Premier League Scraper", font="slant"))
+commands = """
+- {}latest{}: to see the latest score
+- {}top5{}: to see the top 5 teams
+- {}exit{}: to exit the application
+""".format(Fore.YELLOW, Style.RESET_ALL, Fore.YELLOW, Style.RESET_ALL, Fore.YELLOW, Style.RESET_ALL)
 
-print(Style.RESET_ALL + "Welcome to the " + Fore.GREEN +
-      "Premier League Scrapper" + Style.RESET_ALL + "!")
-print("Explore the latest scores and team information in the league.")
+message = """
+Welcome to {}Premier League Scrapper{}!
+Stay up-to-date with the most recent Premier League news directly from your command line
 
-# Instructions
-print("Use the following commands:")
-print("- " + Fore.YELLOW + "latest" +
-      Style.RESET_ALL + ": to see the latest score")
-print("- " + Fore.YELLOW + "top5" + Style.RESET_ALL + ": to see the top 5 teams")
-# print("- " + Fore.YELLOW + "standings" + Style.RESET_ALL +
-#       ": to view the current league standings")
-# print("- " + Fore.YELLOW + "team <team_name>" + Style.RESET_ALL +
-#       ": to get detailed information about a specific team")
-print("- " + Fore.YELLOW + "exit" + Style.RESET_ALL + ": to exit the application")
+Use the following commands:
 
+{}
+
+""".format(Fore.GREEN, Style.RESET_ALL, commands)
 
 stats_url = "https://fbref.com/en/comps/9/Premier-League-Stats"
 
@@ -100,19 +94,31 @@ shooting.columns = shooting.columns.droplevel()  # Drop 1 level of the columns
 merged_data = matches[0].merge(
     shooting[["Date", "Sh", "SoT", "Dist", "FK", "PK", "PKatt"]], on="Date")
 
+# Introduction Prompt Message
+try:
+    print(Fore.GREEN + title + "\n" + message)
+except:
+    print(pyfiglet.figlet_format(
+        "Premier League Scraper", font="slant"), "\n" + message)
+
 
 def runScript():
     while True:
         userPrompt = input("Enter a command: ").lower().strip()
         if userPrompt == "latest":
+            print(Fore.GREEN + 'LATEST NEWS')
             print(merged_data)
+            print(commands)
         elif userPrompt == 'top5':
+            print(Fore.GREEN + 'TOP 5 RESULTS')
             print(merged_data.head())
+            print(commands)
         elif userPrompt == "exit":
-            print('Okie Dokie.. See ya later :)')
+            print(Fore.YELLOW + 'Okie Dokie.. See ya later :)')
             break
         else:
-            print("Oops! It seems there might be a small mistake with your command. Please choose the correct command.")
+            print(Fore.RED + "Oops! It seems there might be a small mistake with your command. Please select a command from the list below:")
+            print(commands)
 
 
 runScript()
