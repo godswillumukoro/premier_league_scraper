@@ -26,7 +26,7 @@ title = r"""
 
 """
 
-# Introduction & Prompt Message
+# Introduction Prompt Message
 try:
     print(Fore.GREEN + title)
 except:
