@@ -41,10 +41,10 @@ print("Use the following commands:")
 print("- " + Fore.YELLOW + "latest" +
       Style.RESET_ALL + ": to see the latest score")
 print("- " + Fore.YELLOW + "top5" + Style.RESET_ALL + ": to see the top 5 teams")
-print("- " + Fore.YELLOW + "standings" + Style.RESET_ALL +
-      ": to view the current league standings")
-print("- " + Fore.YELLOW + "team <team_name>" + Style.RESET_ALL +
-      ": to get detailed information about a specific team")
+# print("- " + Fore.YELLOW + "standings" + Style.RESET_ALL +
+#       ": to view the current league standings")
+# print("- " + Fore.YELLOW + "team <team_name>" + Style.RESET_ALL +
+#       ": to get detailed information about a specific team")
 print("- " + Fore.YELLOW + "exit" + Style.RESET_ALL + ": to exit the application")
 
 
@@ -100,4 +100,19 @@ shooting.columns = shooting.columns.droplevel()  # Drop 1 level of the columns
 merged_data = matches[0].merge(
     shooting[["Date", "Sh", "SoT", "Dist", "FK", "PK", "PKatt"]], on="Date")
 
-print(merged_data)
+
+def runScript():
+    while True:
+        userPrompt = input("Enter a command: ").lower().strip()
+        if userPrompt == "latest":
+            print(merged_data)
+        elif userPrompt == 'top5':
+            print(merged_data.head())
+        elif userPrompt == "exit":
+            print('Okie Dokie.. See ya later :)')
+            break
+        else:
+            print("Oops! It seems there might be a small mistake with your command. Please choose the correct command.")
+
+
+runScript()
