@@ -42,27 +42,42 @@ Use the following commands:
 
 """.format(Fore.GREEN, Style.RESET_ALL, commands)
 
-stats_url = "https://fbref.com/en/comps/9/Premier-League-Stats"
+# stats_url = "https://fbref.com/en/comps/9/Premier-League-Stats"
+team_urls = []
 
-data = requests.get(stats_url)  # download the HTML of this page
+try:
 
-# Initialize the soup object
-soup = BeautifulSoup(data.text,  features="html.parser")
+    data = requests.get("https://fbref.com/en/comps/9/Premier-League-Stats")  # download the HTML of this page
+    data.raise_for_status() # Check for HTTP errors
 
-# select the first element. using css selector
-stats_table = soup.select('table.stats_table')[0]
+    # Initialize the soup object
+    soup = BeautifulSoup(data.text,  features="html.parser")
 
-# print(stats_table)  # View downloaded HTML
-href_links = stats_table.find_all('a')  # select anchor tags using find_all
+    # select the first element. using css selector
+    stats_table = soup.select('table.stats_table')[0]
 
-# get href properties using list comprehension
-href_links = [h.get('href') for h in href_links]
+    # print(stats_table)  # View downloaded HTML
+    href_links = stats_table.find_all('a')  # select anchor tags using find_all
 
-# get rid of the link if its not squads links
-href_links = [h for h in href_links if '/squads/' in h]
+    # get href properties using list comprehension
+    href_links = [h.get('href') for h in href_links]
 
-# append leading string to have full absolute urls
-team_urls = [f"https://fbref.com{h}" for h in href_links]
+    # get rid of the link if its not squads links
+    href_links = [h for h in href_links if '/squads/' in h]
+
+    # append leading string to have full absolute urls
+
+    team_urls = [f"https://fbref.com{h}" for h in href_links]
+except requests.exceptions.RequestException as e:
+    # Handle network-related errors
+    print("An expected error occurred. Try again.")
+    # Or you can return the error message if this code is inside a function
+    # return "An expected error occurred. Try again."
+except Exception as e:
+    # Handle other unexpected errors
+    print(f"An unexpected error occurred: {e}")
+    # Or you can return the error message if this code is inside a function
+    # return f"An unexpected error occurred: {e}"
 
 # print(team_urls)
 
