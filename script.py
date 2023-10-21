@@ -4,51 +4,36 @@ import pandas as pd
 from io import StringIO
 from colorama import init, Fore, Style
 import pyfiglet
+from ascii_art import ASCII_ART
 
 # Initialize colorama
 init(autoreset=True)
 
 # ASCII art title
-title = r"""
-██████╗░██████╗░███████╗███╗░░░███╗██╗███████╗██████╗░  ██╗░░░░░███████╗░█████╗░░██████╗░██╗░░░██╗███████╗
-██╔══██╗██╔══██╗██╔════╝████╗░████║██║██╔════╝██╔══██╗  ██║░░░░░██╔════╝██╔══██╗██╔════╝░██║░░░██║██╔════╝
-██████╔╝██████╔╝█████╗░░██╔████╔██║██║█████╗░░██████╔╝  ██║░░░░░█████╗░░███████║██║░░██╗░██║░░░██║█████╗░░
-██╔═══╝░██╔══██╗██╔══╝░░██║╚██╔╝██║██║██╔══╝░░██╔══██╗  ██║░░░░░██╔══╝░░██╔══██║██║░░╚██╗██║░░░██║██╔══╝░░
-██║░░░░░██║░░██║███████╗██║░╚═╝░██║██║███████╗██║░░██║  ███████╗███████╗██║░░██║╚██████╔╝╚██████╔╝███████╗
-╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝╚══════╝╚═╝░░╚═╝  ╚══════╝╚══════╝╚═╝░░╚═╝░╚═════╝░░╚═════╝░╚══════╝
+title = ASCII_ART
 
-░██████╗░█████╗░██████╗░░█████╗░██████╗░███████╗██████╗░
-██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
-╚█████╗░██║░░╚═╝██████╔╝███████║██████╔╝█████╗░░██████╔╝
-░╚═══██╗██║░░██╗██╔══██╗██╔══██║██╔═══╝░██╔══╝░░██╔══██╗
-██████╔╝╚█████╔╝██║░░██║██║░░██║██║░░░░░███████╗██║░░██║
-╚═════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚══════╝╚═╝░░╚═╝
-
+commands = f"""
+- {Fore.YELLOW}latest{Style.RESET_ALL}: to see the latest score
+- {Fore.YELLOW}top5{Style.RESET_ALL}: to see the top 5 teams
+- {Fore.YELLOW}exit{Style.RESET_ALL}: to exit the application
 """
 
-commands = """
-- {}latest{}: to see the latest score
-- {}top5{}: to see the top 5 teams
-- {}exit{}: to exit the application
-""".format(Fore.YELLOW, Style.RESET_ALL, Fore.YELLOW, Style.RESET_ALL, Fore.YELLOW, Style.RESET_ALL)
-
-message = """
-Welcome to {}Premier League Scrapper{}!
-Stay up-to-date with the most recent Premier League news directly from your command line
+message = f"""
+Welcome to {Fore.GREEN}Premier League Scrapper{Style.RESET_ALL}!
+Stay up-to-date with the most recent Premier League news directly from your command line.
 
 Use the following commands:
-
-{}
-
-""".format(Fore.GREEN, Style.RESET_ALL, commands)
+{commands}
+"""
 
 # stats_url = "https://fbref.com/en/comps/9/Premier-League-Stats"
 team_urls = []
 
 try:
 
-    data = requests.get("https://fbref.com/en/comps/9/Premier-League-Stats")  # download the HTML of this page
-    data.raise_for_status() # Check for HTTP errors
+    # download the HTML of this page
+    data = requests.get("https://fbref.com/en/comps/9/Premier-League-Stats")
+    data.raise_for_status()  # Check for HTTP errors
 
     # Initialize the soup object
     soup = BeautifulSoup(data.text,  features="html.parser")
